@@ -38,10 +38,8 @@ def tl_vbm(stim, L, flag='vihml'):
     cochlear_list=[[cochlea_model(), stim[i], irr_on[0][i], i, opts] for i in range(opts ['channels'])]
 
     print("running human auditory model 2018: Verhulst, Altoe, Vasilkov")
-    p=mp.Pool(mp.cpu_count(),maxtasksperchild=1)
-    output = p.map(solve_one_cochlea,cochlear_list)
-    p.close()
-    p.join()
+    with mp.Pool(mp.cpu_count(), maxtasksperchild=1) as p:
+        output = p.map(solve_one_cochlea, cochlear_list)
 
     print("cochlear simulation: done")
 
